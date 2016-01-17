@@ -52,13 +52,12 @@ xmlhttp.open("GET", url, true);
 xmlhttp.send();
 
 function getUserId(url) {
-	alert(uname + " " + pass);
+	alert(uname);
 }
 function loginUser() {
 	uname = document.getElementById("uname").value;
 	pass = document.getElementById("pass").value;
 	testCreds();
-	
 }
 function testCreds() {
 	var testReq = new XMLHttpRequest();
@@ -69,8 +68,6 @@ function testCreds() {
 				document.getElementById("login-dialog").style.display = "none";
 			} else if(testReq.status == 401) {
 				console.log("Try again.");
-				document.getElementById("uname").value = "";
-				document.getElementById("pass").value = "";
 			}
 		}
 	};
