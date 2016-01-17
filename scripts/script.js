@@ -26,51 +26,59 @@ window.onresize = function() {
 	scale = 1280 / (1.49 * w);
 	element.style.width =  (scale * 100) + "%";
 }*/
-document.getElementById("login-form").onsubmit = function() {
-	loginUser();
-}
-var xmlhttp = new XMLHttpRequest();
-var url = "https://ion.tjhsst.edu/api/profile?format=api";
+//var xmlhttp = new XMLHttpRequest();
+var url = "ion.tjhsst.edu/api/profile?format=json";
 var uname = "";
 var pass = "";
-xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4) {
+document.getElementById("login-dialog").style.display = "block";
+testCreds();
+/*xmlhttp.onreadystatechange = function() {
+    //if (xmlhttp.readyState == 4) {
     	if(xmlhttp.status == 200) {
-    		var myArr = JSON.parse(xmlhttp.responseText);
-        	getUserId(myArr);
+        	getUserId(xmlhttp.response);
     	} else if(xmlhttp.status == 401) {
 			console.log("Please sign in");
 			document.getElementById("login-dialog").style.display = "block";
 		}
-    }
+    //}
 };
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
-
-function getUserId(url) {
-	alert(uname);
+xmlhttp.open("GET", "https://" + url, true, uname, pass);
+xmlhttp.send();*/
+/*document.getElementById("login-form").onsubmit = function() {
+	uname = document.getElementById("uname").value;
+	pass = document.getElementById("pass").value;
+	alert(uname + ":" + pass + "@" + url);
+}*/
+function getUserId(json) {
+	console.log(json)
 }
 function loginUser() {
 	uname = document.getElementById("uname").value;
 	pass = document.getElementById("pass").value;
-	testCreds();
+	//xmlhttp.open("GET", "https://" + url, true, uname, pass);
+	//console.log(xmlhttp.readyState);
+	//console.log(xmlhttp.status);
+	//testCreds();
 }
 function testCreds() {
-	var testReq = new XMLHttpRequest();
-	testReq.onreadystatechange = function() {
-		if (testReq.readyState == 4) {
-			if(testReq.status == 200) {
-				console.log("successful!");
-				document.getElementById("login-dialog").style.display = "none";
-			} else if(testReq.status == 401) {
-				console.log("Try again.");
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4) {
+			if(xmlhttp.status == 200) {
+				getUserId(xmlhttp.response);
+			} else if(xmlhttp.status == 401) {
+				console.log("Please sign in");
+				document.getElementById("login-dialog").style.display = "block";
 			}
 		}
 	};
-	testReq.open("GET", uname + ":" + pass + "@" + url, true);
-	testReq.send();
+	xmlhttp.open("GET", "https://" + url, true)
+	console.log(xmlhttp.readyState);
+	xmlhttp.open("GET", "https://" + uname + ":" + pass + "@" + url, true);
+	getUserId(xmlhttp.responseText);
+	console.log("https://" + uname + ":" + pass + "@" + url);
 }
-var profile = getUserId("https://ion.tjhsst.edu/api/profile?format=api");
+var profile = getUserId("ion.tjhsst.edu/api/profile?format=api");
 var Module = class {
 	constructor(s) {
 		var parent = document.getElementById("content"),

@@ -39,10 +39,10 @@ span {
 }
 #login-form {
 	width: calc(100% - 15px);
-	height: calc(100% - 30px);
+	height: calc(100% - 125px);
 	float: left;
 	margin-top: 30px;
-	padding-left: calc((100% - 300px)/2);	
+	padding-left: 12.5%;/*calc((100% - 300px)/2);	*/
 }
 input {
     font-family: Roboto, Helvetica Neue, Helvetica, sans-serif;
@@ -50,7 +50,7 @@ input {
     font-size:18px;
 	padding:10px 10px 10px 5px;
 	display:block;
-	width:285px;
+	width:75%;
 	border:none;
 	border-bottom:1px solid #757575;
 }
@@ -83,7 +83,7 @@ input:focus ~ label, input:valid ~ label 		{
 }
 
 /* BOTTOM BARS ================================= */
-.bar 	{ position:relative; display:block; width:300px; }
+.bar 	{ position:relative; display:block; width:calc(75% + 15px); }
 .bar:before, .bar:after 	{
   content:'';
   height:1px; 
@@ -161,6 +161,15 @@ button {
     -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+.basic-button:hover {
+    background-color: #e0e0e0;
+    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.basic-button:active {
+    background-color: #bdbdbd
+}
 #menu-bar {
 	height: 48px;
 	background-color: #0048ab;
@@ -223,7 +232,6 @@ button {
     height: 100vh;
     width: 20%;
     /*left: -30%;*/
-    
     display: block;
     position: fixed;
     overflow: hidden;
@@ -247,7 +255,8 @@ button {
     text-align: left;   
 }
 #login-dialog {
-	margin: 10% 25% ;
+	margin: 10% 25%;
+	min-height: 300px;
 	max-height: 500px;
 	height: 50%;
 	width: 50%;
