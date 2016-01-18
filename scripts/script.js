@@ -126,12 +126,26 @@ var Module = class {
         } else if(s == "activities") {
             header.innerHTML = "Attended Clubs:";
             var act = getActivities()[0],
-                occ = getActivities()[1];
+                occ = getActivities()[1],
+				table = document.createElement("table"),
+				colName1 = document.createElement("th"),
+				colName2 = document.createElement("th");
+			colName1.innerHTML = "Club Name";
+			colName2.innerHTML = "Times Attended";
+			table.appendChild(colName1);
+			table.appendChild(colName2);
             for(var i = 0; i < act.length; i++) {
-                var row = document.createElement("span");
-                row.innerHTML = act[i] + " " + occ[i];
-                mod.appendChild(row);
+                var row = document.createElement("tr"),
+					cell1 = document.createElement("td"),
+					cell2 = document.createElement("td");
+                cell1.innerHTML = act[i];
+				cell2.innerHTML = occ[i];
+                row.appendChild(cell1);
+				row.appendChild(cell2);
+				table.appendChild(row);
+				
             }
+			mod.appendChild(table);
         }
         /*modWrap = document.createElement("div"),
 		mod = document.createElement("div"),
