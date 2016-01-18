@@ -231,7 +231,7 @@ button {
     float: left;
     height: 100vh;
     width: 20%;
-    /*left: -30%;*/
+    left: -20%;
     display: block;
     position: fixed;
     overflow: hidden;
@@ -247,23 +247,22 @@ button {
 #content-wrapper {
     width: 100%;
     text-align: center;
-    margin-left: 20%;
 }
 #content {
+    width: 100%;
     height: calc(100vh - 48px);
     font-size: 20px;
     text-align: left;
     overflow-y: scroll;
 }
 #login-dialog {
-	margin: 10% 25%;
+	margin: 10% 15%;
 	min-height: 300px;
 	max-height: 500px;
 	height: 50%;
-	width: 50%;
+	width: 70%;
 	display: none;
 	padding-top: 35px;
-	padding-left: 15px;
 	text-align: center;
 	background-color: #eee;
 	z-index: 10000;
