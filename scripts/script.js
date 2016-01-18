@@ -26,63 +26,114 @@ window.onresize = function() {
 	scale = 1280 / (1.49 * w);
 	element.style.width =  (scale * 100) + "%";
 }*/
-//var xmlhttp = new XMLHttpRequest();
-var url = "ion.tjhsst.edu/api/profile?format=json";
+
+var request = new XMLHttpRequest(); 
+var profileUrl = "ion.tjhsst.edu/api/profile?format=json";
 var uname = "";
 var pass = "";
+var userInfo;// = reqHandler(profileUrl); //Initial test for authetication
+var userBlocks;
+var authed = false;
 document.getElementById("login-dialog").style.display = "block";
-testCreds();
-/*xmlhttp.onreadystatechange = function() {
-    //if (xmlhttp.readyState == 4) {
-    	if(xmlhttp.status == 200) {
-        	getUserId(xmlhttp.response);
-    	} else if(xmlhttp.status == 401) {
-			console.log("Please sign in");
-			document.getElementById("login-dialog").style.display = "block";
-		}
-    //}
+
+request.onload = function() {
+    if(request.status >= 200 && request.status < 400) {
+        document.getElementById("login-dialog").style.display = "none";
+        if(authed) {
+            userBlocks = JSON.parse(request.responseText);
+            loadModules();
+        } else {
+            userInfo = JSON.parse(request.responseText);
+            authed = true;
+            reqHandler("ion.tjhsst.edu/api/signups/user/" + userInfo.id + "?format=json");
+        }
+    } else {
+        //if(!(uname == "" && pass == "")) {
+            var loginMesg = document.getElementById("login-message");
+            loginMesg.innerHTML = "Invalid credentials";
+            loginMesg.style.color = "#F44336";
+        //}
+    }
 };
-xmlhttp.open("GET", "https://" + url, true, uname, pass);
-xmlhttp.send();*/
-/*document.getElementById("login-form").onsubmit = function() {
-	uname = document.getElementById("uname").value;
-	pass = document.getElementById("pass").value;
-	alert(uname + ":" + pass + "@" + url);
-}*/
-function getUserId(json) {
-	console.log(json)
-}
+request.onerror = function() {
+    console.log("Connection Error");
+};
+
 function loginUser() {
 	uname = document.getElementById("uname").value;
-	pass = document.getElementById("pass").value;
-	//xmlhttp.open("GET", "https://" + url, true, uname, pass);
-	//console.log(xmlhttp.readyState);
-	//console.log(xmlhttp.status);
-	//testCreds();
+    pass = document.getElementById("pass").value;
+    reqHandler(profileUrl);
 }
-function testCreds() {
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState == 4) {
-			if(xmlhttp.status == 200) {
-				getUserId(xmlhttp.response);
-			} else if(xmlhttp.status == 401) {
-				console.log("Please sign in");
-				document.getElementById("login-dialog").style.display = "block";
-			}
-		}
-	};
-	xmlhttp.open("GET", "https://" + url, true)
-	console.log(xmlhttp.readyState);
-	xmlhttp.open("GET", "https://" + uname + ":" + pass + "@" + url, true);
-	getUserId(xmlhttp.responseText);
-	console.log("https://" + uname + ":" + pass + "@" + url);
+
+function reqHandler(url) {
+	try {
+        request.open("GET", "https://" + url, true);
+        request.setRequestHeader("Authorization", "Basic " + btoa(uname + ":" + pass));
+        request.send();
+    } catch(e) {
+        console.log("Error");
+    }
 }
-var profile = getUserId("ion.tjhsst.edu/api/profile?format=api");
+
+function getTotalServiceHours() {
+    var count = 0,
+        temp = "",
+        eligActivities = ["Belvedere Elem. Tutors", "Codi's Hats", "Columbia Elem. School Tutors", "Computer Tech Assistants", "Glasgow Middle School tutoring"];
+    for(var i = 0; i < userBlocks.length; i++) {
+        temp = userBlocks[i].activity.title;
+        console.log(temp);
+        if(eligActivities.includes(temp)) {
+            count += 40;
+        }
+    }
+    return count;
+}
+
+function getActivities() {
+    var arr = [],
+        occ = [],
+        temp = "";
+    for(var i = 0; i < userBlocks.length; i++) {
+        temp = userBlocks[i].activity.title;
+        if(arr.includes(temp)) {
+            occ[arr.indexOf(temp)]++;
+        } else {
+            arr.push(userBlocks[i].activity.title);
+            occ.push(1);
+        }
+    }
+    return [arr, occ];
+}
+
+function loadModules() {
+    var serviceHours = new Module("hours");
+    var activitiesTotal = new Module("activities");
+}
+
 var Module = class {
 	constructor(s) {
 		var parent = document.getElementById("content"),
-		modWrap = document.createElement("div"),
+		    modWrap = document.createElement("div"),
+            header = document.createElement("h2"),
+            mod = document.createElement("div");
+        modWrap.className = "card-wrapper";
+        mod.className = "card";
+        header.className = "card-title";
+        if(s == "hours") {
+            header.innerHTML = "Total Service Hours:";
+            var count = getTotalServiceHours();
+            mod.innerHTML = Math.floor(count/60) + " Hours " +  count % 60 + " Minutes";
+        } else if(s == "activities") {
+            header.innerHTML = "Attended Clubs:";
+            var act = getActivities()[0],
+                occ = getActivities()[1];
+            for(var i = 0; i < act.length; i++) {
+                var row = document.createElement("span");
+                row.innerHTML = act[i] + " " + occ[i];
+                mod.appendChild(row);
+            }
+        }
+        /*modWrap = document.createElement("div"),
 		mod = document.createElement("div"),
 		bar = document.createElement("div"),
 		label = document.createElement("div"),
@@ -97,39 +148,15 @@ var Module = class {
 		expand.className = "expand-button";
 		exit.className = "exit-button";
 		exit.onclick = function() {modWrap.remove()};
-		if(s == "twitter") {
-			var twitter = document.createElement("a");
-			twitter.className = "twitter-timeline";
-			twitter.setAttribute("data-dnt", "true");
-			twitter.setAttribute("data-widget-id", "667454451305836544");
-			var script = document.createElement("script");
-			script.src = "scripts/twitter.js"
-			mod.appendChild(twitter);
-			mod.appendChild(script);
-			bar.style.backgroundColor = "#2196F3";
-		} else if(s == "nagios") {
-			var frame = document.createElement("iframe");
-			frame.id = "monitor";
-			frame.src = "https://monitor.tjhsst.edu";
-			mod.appendChild(frame);
-			bar.style.backgroundColor = "#2196F3";
-		} else if(s.includes("block")) {
-			var frame = document.createElement("iframe");
-			frame.id = "blocks";
-			if(s == "ablock") {
-				frame.src = "https://ion.tjhsst.edu/signage/eighth";
-			} else if(s == "bblock") {
-				frame.src = "https://ion.tjhsst.edu/signage/eighth?block_increment=1";
-			}
-			mod.appendChild(frame);
-			bar.style.backgroundColor = "#bdbdbd";
-		}
 		expand.onclick = function() {toggleModExpand(modWrap, expand)};
 		modWrap.appendChild(bar);
 		label.appendChild(expand);
 		bar.appendChild(label);
 		bar.appendChild(exit);
 		modWrap.appendChild(mod);
-		parent.insertBefore(modWrap, button);
-	}
+		*/
+        modWrap.appendChild(header);
+        modWrap.appendChild(mod);
+        parent.appendChild(modWrap);
+    }
 }

@@ -5,12 +5,12 @@
     <meta content="" name="description"/>
     <meta content="William Zhang" name="author"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link href="styles/main.css" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet"/>
     <title>8th Tracker</title>
 </head>
 <body>
 	<div id="login-dialog">
-		<h1>Please login to Ion</h1>
+		<h1 id="login-message">Please login to Ion</h1>
 		<form id="login-form">
 			<div class="group">      
 			  <input type="text" id="uname" required>
@@ -23,7 +23,7 @@
 			  <label>Password</label>
 			</div>
 		</form>
-		<button class="basic-button" onclick="loginUser()">Submit</button>
+		<button class="basic-button" onclick="loginUser()">Login</button>
 	</div>
 	<div id="sidebar-wrapper">
 		<div id="sidebar">
@@ -36,7 +36,6 @@
 		</div>
 		<div id="content-wrapper">
             <div id="content">
-            	<div class="card"></div>
             </div>
         </div>
     </div>
