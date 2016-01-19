@@ -124,7 +124,7 @@ var Module = class {
             var count = getTotalServiceHours();
             mod.innerHTML = Math.floor(count/60) + " Hours " +  count % 60 + " Minutes";
         } else if(s == "activities") {
-            header.innerHTML = "Attended Clubs:";
+            header.innerHTML = "Your Clubs:";
             var act = getActivities()[0],
                 occ = getActivities()[1],
 				table = document.createElement("table"),

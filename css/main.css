@@ -47,6 +47,13 @@ th, td {
 	border: 1px solid #e0e0e0;
 	padding: 5px;
 }
+tr {
+	-webkit-transition: all .1s ease;
+    -moz-transition: all .1s ease;
+    -ms-transition: all .1s ease;
+    -o-transition: all .1s ease;
+    transition: all .1s ease;
+}
 tr:hover {
 	background-color: #e0e0e0;
 }
@@ -321,9 +328,10 @@ button {
     padding: 15px;
     float: left;
 	margin: 7.5px;
-    width: 40vw;
+    width: 30vw;
 	min-width: 250px;
-    height: 40vh;
+	max-width: 500px;
+    height: 50vh;
 	overflow-y: auto;
 	background-color: #fff;
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
