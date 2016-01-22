@@ -106,9 +106,9 @@ input:focus ~ label, input:valid ~ label 		{
 .bar 	{ position:relative; display:block; width:calc(75% + 15px); }
 .bar:before, .bar:after 	{
   content:'';
-  height:1px; 
+  height:2px; 
   width:0;
-  bottom:1px; 
+  bottom:0px; 
   position:absolute;
   background:#5264AE; 
   transition:0.2s ease all; 
