@@ -34,7 +34,15 @@ var pass = "";
 var userInfo;// = reqHandler(profileUrl); //Initial test for authetication
 var userBlocks;
 var authed = false;
-document.getElementById("login-dialog").style.display = "block";
+var noToken = true;
+var csrfToken = "";
+getCsrf();
+/*if(authed) {
+    
+} else {
+    document.getElementById("login-dialog").style.display = "block";
+}*/
+
 
 request.onload = function() {
     if(request.status >= 200 && request.status < 400) {
@@ -43,9 +51,17 @@ request.onload = function() {
             userBlocks = JSON.parse(request.responseText);
             loadModules();
         } else {
-            userInfo = JSON.parse(request.responseText);
-            authed = true;
-            reqHandler("ion.tjhsst.edu/api/signups/user/" + userInfo.id + "?format=json");
+            if(noToken) {
+                csrfToken = request.response.split("token' value='")[1].split("'")[0]
+                console.log(csrfToken);
+                authed = true;
+                noToken = false;
+            } else {
+                userInfo = JSON.parse(request.responseText);
+                console.log(userInfo);
+                authed = true;
+                reqHandler("ion.tjhsst.edu/api/signups/user/" + userInfo.id + "?format=json", false);
+            }
         }
     } else {
         //if(!(uname == "" && pass == "")) {
@@ -59,10 +75,14 @@ request.onerror = function() {
     console.log("Connection Error");
 };
 
+function getCsrf() {
+    reqHandler("ion.tjhsst.edu");
+}
+
 function loginUser() {
 	uname = document.getElementById("uname").value;
     pass = document.getElementById("pass").value;
-    reqHandler(profileUrl);
+    reqHandler(profileUrl, false);
 }
 
 function reqHandler(url) {
