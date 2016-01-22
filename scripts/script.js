@@ -32,7 +32,7 @@ window.onkeydown = function(event) {
 	scale = 1280 / (1.49 * w);
 	element.style.width =  (scale * 100) + "%";
 }*/
-var request = new XMLHttpRequest();,
+var request = new XMLHttpRequest(),
     profileUrl = "ion.tjhsst.edu/api/profile?format=json",
     uname = "",
     pass = "",
