@@ -4,13 +4,19 @@ var scale = 1.5,
 	h = window.innerHeight,
 	dia = false,
 	exp = false,
-	tempW, tempH, tempM;
+	tempW, tempH, tempM,
+    dialog = document.getElementById("login-dialog");
 /*setScale();*/
 window.onresize = function() {
 	w = window.innerWidth;
 	h = window.innerHeight;
 	console.log(w);
 	/*setScale();*/
+}
+window.onkeydown = function(event) {
+    if(event.keyCode == 13 && dialog.style.display == "block") {
+        loginUser();
+    }
 }
 /*function setScale() {
 	var element = document.getElementById('schedule'),
@@ -26,19 +32,18 @@ window.onresize = function() {
 	scale = 1280 / (1.49 * w);
 	element.style.width =  (scale * 100) + "%";
 }*/
-
-var request = new XMLHttpRequest(); 
-var profileUrl = "ion.tjhsst.edu/api/profile?format=json";
-var uname = "";
-var pass = "";
-var userInfo;// = reqHandler(profileUrl); //Initial test for authetication
-var userBlocks;
-var authed = false;
-document.getElementById("login-dialog").style.display = "block";
+var request = new XMLHttpRequest();,
+    profileUrl = "ion.tjhsst.edu/api/profile?format=json",
+    uname = "",
+    pass = "",
+    userInfo,// = reqHandler(profileUrl); //Initial test for authetication
+    userBlocks,
+    authed = false;
+dialog.style.display = "block";
 
 request.onload = function() {
     if(request.status >= 200 && request.status < 400) {
-        document.getElementById("login-dialog").style.display = "none";
+        dialog.style.display = "none";
         if(authed) {
             userBlocks = JSON.parse(request.responseText);
             loadModules();
