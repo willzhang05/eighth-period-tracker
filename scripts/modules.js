@@ -28,7 +28,9 @@ function getActivities() {
 }
 
 function genPieGraph(json) {
-    var per = json,
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    /*var per = json,
         total = 0,
         temp,
         temp2 = 0;
@@ -43,7 +45,16 @@ function genPieGraph(json) {
     }
     console.log(per);
     console.log(temp2);
-    return document.createElement("svg");
+    return document.createElement("svg");*/
+}
+
+function jsonToArray(json) {
+    var r = [],
+        keys = Object.keys(json);
+    for(var i = 0; i < keys.length; i++) {
+        r.push([keys[i], json[keys[i]]]);
+    }
+    return r;
 }
 
 var Module = class {
@@ -84,9 +95,26 @@ var Module = class {
             }
 			mod.appendChild(table);
         } else if(s == "pie") {
-            var act = getActivities(),
-                pie = genPieGraph(act);
-            mod.appendChild(pie);
+            header.innerHTML = "Pie Chart of 8th Periods:";
+            /*var api = document.createElement("script");
+            api.setAttribute("src", "scripts/loader.js");
+            document.getElementsByTagName('body')[0].appendChild(api);*/
+            var act = getActivities();
+                //pie = genPieGraph(act);
+            //mod.appendChild(pie);
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Activity');
+            data.addColumn('number', 'Attended');
+            var temp = jsonToArray(act);
+            console.log(temp);
+            data.addRows(temp);
+            var options = {
+              width: 400,
+              height: 400
+            };
+            var chart = new google.visualization.PieChart(mod);
+            chart.draw(data, options);
+            
         }
         modWrap.appendChild(header);
         modWrap.appendChild(mod);

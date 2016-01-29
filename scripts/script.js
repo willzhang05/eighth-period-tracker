@@ -4,8 +4,10 @@ var scale = 1.5,
 	h = window.innerHeight,
 	dia = false,
 	exp = false,
+    hov = false,
 	tempW, tempH, tempM,
-    dialog = document.getElementById("login-dialog");
+    dialog = document.getElementById("login-dialog"),
+    modules = [];
 /*setScale();*/
 window.onresize = function() {
 	w = window.innerWidth;
@@ -18,6 +20,43 @@ window.onkeydown = function(event) {
         loginUser();
     }
 }
+/*document.getElementById("add-card-wrapper").onmouseover = function(e) {
+    var button = document.getElementById("add-card-wrapper");
+	if(parseInt(window.getComputedStyle(button).opacity) <= 0.1) {
+		unfade(button);
+	}
+	hov = true;
+};
+setInterval(function(){
+	var button = document.getElementById("add-card-wrapper");
+	if(!hov && parseFloat(window.getComputedStyle(button).opacity) >= 1) {
+		fade(button);
+	}
+	hov = false;  
+}, 3000);
+function fade(element) {
+		var op = 1;  // initial opacity
+		var timer = setInterval(function () {
+			if (op <= 0.1){
+				clearInterval(timer);
+				element.style.opacity = '0';
+			}
+			element.style.opacity = op;
+			element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+			op -= op * 0.1;
+		}, 5);
+}
+function unfade(element) {
+		var op = 0.1;  // initial opacity
+		var timer = setInterval(function () {
+			if (op >= 1){
+				clearInterval(timer);
+			}
+			element.style.opacity = op;
+			element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+			op += op * 0.1;
+		}, 5);
+}*/
 /*function setScale() {
 	var element = document.getElementById('schedule'),
 		style = window.getComputedStyle(element),
@@ -81,7 +120,7 @@ function reqHandler(url) {
 }
 
 function loadModules() {
-    var serviceHours = new Module("hours");
-    var activitiesTotal = new Module("activities");
-    var activitiesPie = new Module("pie");
+    modules.push(new Module("hours"));
+    modules.push(new Module("activities"));
+    modules.push(new Module("pie"));
 }

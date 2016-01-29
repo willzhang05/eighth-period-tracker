@@ -79,20 +79,22 @@ input {
   position:relative; 
   margin-bottom:45px; 
 }
-input:focus 		{ outline:none; }
+input:focus { outline:none; }
 
 /* LABEL ======================================= */
 label 				 {
-  color:#999; 
-  font-size:18px;
-  font-weight:normal;
-  position:absolute;
-  pointer-events:none;
-  left:5px;
-  top:10px;
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
-  -webkit-transition:0.2s ease all;
+    color:#999; 
+    font-size:18px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -ms-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
 }
 
 /* active state */
@@ -105,15 +107,17 @@ input:focus ~ label, input:valid ~ label 		{
 /* BOTTOM BARS ================================= */
 .bar 	{ position:relative; display:block; width:calc(75% + 15px); }
 .bar:before, .bar:after 	{
-  content:'';
-  height:2px; 
-  width:0;
-  bottom:0px; 
-  position:absolute;
-  background:#5264AE; 
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
-  -webkit-transition:0.2s ease all;
+    content:'';
+    height:2px; 
+    width:0;
+    bottom:0px; 
+    position:absolute;
+    background:#5264AE; 
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    -ms-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
 }
 .bar:before {
   left:50%;
@@ -172,6 +176,40 @@ button {
     transition: all .2s ease;
     border: none;
     outline: 0
+}
+#add-card-button {
+    width: 60px;
+    height: 60px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #F44336;
+    color: #fff;
+    background-image: url('../icons/ic_add_white_48px.svg');
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 17;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+#add-card-button:hover {
+	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+#add-card-button:active {
+    background-color: #E57373;
+}
+#add-card-wrapper {
+    width: 100px;
+    height: 100px;
+	right: 0;
+	bottom: 0;
+    position: fixed;
+    z-index: 16;
+    float:left;
 }
 .basic-button {
 	float:left;
@@ -328,10 +366,8 @@ button {
     padding: 15px;
     float: left;
 	margin: 7.5px;
-    width: 30vw;
-	min-width: 250px;
-	max-width: 500px;
-    height: 50vh;
+    width: 480px;
+    height: 480px;
 	overflow-y: auto;
 	background-color: #fff;
 	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
