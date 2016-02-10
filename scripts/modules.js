@@ -81,7 +81,6 @@ var Module = class {
 			colName2.innerHTML = "Times Attended";
 			table.appendChild(colName1);
 			table.appendChild(colName2);
-            
             for(var i = 0; i < Object.keys(act).length; i++) {
                 var row = document.createElement("tr"),
 					cell1 = document.createElement("td"),
@@ -91,7 +90,6 @@ var Module = class {
                 row.appendChild(cell1);
 				row.appendChild(cell2);
 				table.appendChild(row);
-				
             }
 			mod.appendChild(table);
         } else if(s == "pie") {

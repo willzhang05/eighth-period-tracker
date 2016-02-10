@@ -15,6 +15,7 @@ window.onresize = function() {
 	console.log(w);
 	/*setScale();*/
 }
+
 window.onkeydown = function(event) {
     if(event.keyCode == 13 && dialog.style.display == "block") {
         loginUser();
@@ -99,6 +100,7 @@ request.onload = function() {
         //}
     }
 };
+
 request.onerror = function() {
     console.log("Connection Error");
 };
